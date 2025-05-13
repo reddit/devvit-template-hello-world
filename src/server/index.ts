@@ -5,7 +5,7 @@ import {
   InitResponse,
   IncrementResponse,
   DecrementResponse,
-} from "../../shared/types/api";
+} from "../shared/types/api";
 
 const app = express();
 

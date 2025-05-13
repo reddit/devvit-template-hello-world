@@ -18,7 +18,7 @@
     "jsxFragmentFactory": "Devvit.Fragment"
   },
   // https://github.com/Microsoft/TypeScript/issues/25636
-  "include": ["**/*", "../../package.json", "../server/src/**/*"],
+  "include": ["**/*", "../../package.json", "../server/**/*"],
   "exclude": ["**/*.test.ts"],
   "references": [{ "path": "../shared" }]
 }

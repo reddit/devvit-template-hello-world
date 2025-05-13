@@ -2,7 +2,7 @@ import {
   IncrementResponse,
   DecrementResponse,
   InitResponse,
-} from "../../shared/types/api";
+} from "../shared/types/api";
 
 const counterValueElement = document.getElementById(
   "counter-value"
