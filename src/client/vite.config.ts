@@ -7,7 +7,6 @@ export default defineConfig({
     outDir: '../../webroot',
     emptyOutDir: true,
     sourcemap: true,
-    minify: false,
     chunkSizeWarningLimit: 1500,
   },
 });
