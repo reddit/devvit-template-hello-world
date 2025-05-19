@@ -12,7 +12,7 @@ defineConfig({
   inline: true,
   menu: {
     enable: true,
-    label: "New Hello World Post",
+    label: "[Webbit] New Hello World Post",
     postTitle: "Hello World",
   },
 });

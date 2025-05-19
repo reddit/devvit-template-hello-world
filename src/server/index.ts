@@ -1,6 +1,5 @@
 import express from "express";
-import { createServer } from "http";
-import { devvitMiddleware } from "./middleware";
+import { createServer, getContext } from "@devvit/server";
 import {
   InitResponse,
   IncrementResponse,
@@ -16,16 +15,14 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware for plain text body parsing
 app.use(express.text());
 
-// Apply Devvit middleware
-app.use(devvitMiddleware);
-
 const router = express.Router();
 
 router.get<
   { postId: string },
   InitResponse | { status: string; message: string }
->("/api/init", async (req, res): Promise<void> => {
-  const { postId } = req.devvit;
+>("/api/init", async (_req, res): Promise<void> => {
+  const context = getContext();
+  const postId = context.postId;
 
   if (!postId) {
     console.error("API Init Error: postId not found in devvit context");
@@ -37,7 +34,7 @@ router.get<
   }
 
   try {
-    const count = await req.devvit.redis.get("count");
+    const count = await context.redis.get("count");
     res.json({
       type: "init",
       postId: postId,
@@ -57,8 +54,10 @@ router.post<
   { postId: string },
   IncrementResponse | { status: string; message: string },
   unknown
->("/api/increment", async (req, res): Promise<void> => {
-  const { postId } = req.devvit;
+>("/api/increment", async (_req, res): Promise<void> => {
+  const context = getContext();
+  const postId = context.postId;
+
   if (!postId) {
     res.status(400).json({
       status: "error",
@@ -68,7 +67,7 @@ router.post<
   }
 
   res.json({
-    count: await req.devvit.redis.incrBy("count", 1),
+    count: await context.redis.incrBy("count", 1),
     postId,
     type: "increment",
   });
@@ -78,8 +77,9 @@ router.post<
   { postId: string },
   DecrementResponse | { status: string; message: string },
   unknown
->("/api/decrement", async (req, res): Promise<void> => {
-  const { postId } = req.devvit;
+>("/api/decrement", async (_req, res): Promise<void> => {
+  const context = getContext();
+  const postId = context.postId;
   if (!postId) {
     res.status(400).json({
       status: "error",
@@ -89,7 +89,7 @@ router.post<
   }
 
   res.json({
-    count: await req.devvit.redis.incrBy("count", -1),
+    count: await context.redis.incrBy("count", -1),
     postId,
     type: "decrement",
   });
@@ -98,9 +98,21 @@ router.post<
 // Use router middleware
 app.use(router);
 
-// Get port from environment variable with fallback
-const port = process.env.WEBBIT_PORT || 3000;
-
 const server = createServer(app);
 server.on("error", (err) => console.error(`server error; ${err.stack}`));
-server.listen(port, () => console.log(`http://localhost:${port}`));
+server.startDevvitServer(() => {
+  const addr = server.address();
+  if (addr === null) {
+    console.log("Server address is null, but I'm listening!");
+    return;
+  }
+  if (typeof addr === "string") {
+    console.log(`Server is listening on ${addr}`);
+    return;
+  }
+  if (typeof addr === "object") {
+    console.log(`Server is listening on ${addr.address}:${addr.port}`);
+    return;
+  }
+  console.error('...the hell is it doing?');
+});
