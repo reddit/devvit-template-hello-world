@@ -9,7 +9,6 @@ defineConfig({
   description: "Hello World",
   entry: "index.html",
   height: "tall",
-  inline: true,
   menu: {
     enable: true,
     label: "New Hello World Post",
