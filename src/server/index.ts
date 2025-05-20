@@ -1,6 +1,8 @@
 import express from "express";
 import type {Response} from "express";
+import {getRedisClient, RedisKeyScope} from "@devvit/redis";
 import {createServer, getContext, getServerPort} from "@devvit/server";
+
 import {
   InitResponse,
   IncrementResponse,
@@ -11,6 +13,7 @@ const router = express.Router();
 
 router.get("/api/init", async (_req, res: Response<InitResponse>): Promise<void> => {
   const context = getContext();
+  const redis = getRedisClient(RedisKeyScope.INSTALLATION);
   const postId = context.postId;
 
   if (!postId) {
@@ -23,7 +26,7 @@ router.get("/api/init", async (_req, res: Response<InitResponse>): Promise<void>
   }
 
   try {
-    const count = await context.redis.get("count");
+    const count = await redis.get("count");
     res.json({
       type: "init",
       postId: postId,
@@ -41,6 +44,7 @@ router.get("/api/init", async (_req, res: Response<InitResponse>): Promise<void>
 
 router.post("/api/increment", async (_req, res: Response<IncrementResponse>): Promise<void> => {
   const context = getContext();
+  const redis = getRedisClient(RedisKeyScope.INSTALLATION);
   const postId = context.postId;
 
   if (!postId) {
@@ -52,7 +56,7 @@ router.post("/api/increment", async (_req, res: Response<IncrementResponse>): Pr
   }
 
   res.json({
-    count: await context.redis.incrBy("count", 1),
+    count: await redis.incrBy("count", 1),
     postId,
     type: "increment",
   });
@@ -60,6 +64,7 @@ router.post("/api/increment", async (_req, res: Response<IncrementResponse>): Pr
 
 router.post("/api/decrement", async (_req, res: Response<DecrementResponse>): Promise<void> => {
   const context = getContext();
+  const redis = getRedisClient(RedisKeyScope.INSTALLATION);
   const postId = context.postId;
   if (!postId) {
     res.status(400).json({
@@ -70,7 +75,7 @@ router.post("/api/decrement", async (_req, res: Response<DecrementResponse>): Pr
   }
 
   res.json({
-    count: await context.redis.incrBy("count", -1),
+    count: await redis.incrBy("count", -1),
     postId,
     type: "decrement",
   });
