@@ -1,26 +1,15 @@
 import express from "express";
-import { createServer, getContext } from "@devvit/server";
+import type {Response} from "express";
+import {createServer, getContext, getServerPort} from "@devvit/server";
 import {
   InitResponse,
   IncrementResponse,
   DecrementResponse,
 } from "../shared/types/api";
 
-const app = express();
-
-// Middleware for JSON body parsing
-app.use(express.json());
-// Middleware for URL-encoded body parsing
-app.use(express.urlencoded({ extended: true }));
-// Middleware for plain text body parsing
-app.use(express.text());
-
 const router = express.Router();
 
-router.get<
-  { postId: string },
-  InitResponse | { status: string; message: string }
->("/api/init", async (_req, res): Promise<void> => {
+router.get("/api/init", async (_req, res: Response<InitResponse>): Promise<void> => {
   const context = getContext();
   const postId = context.postId;
 
@@ -50,11 +39,7 @@ router.get<
   }
 });
 
-router.post<
-  { postId: string },
-  IncrementResponse | { status: string; message: string },
-  unknown
->("/api/increment", async (_req, res): Promise<void> => {
+router.post("/api/increment", async (_req, res: Response<IncrementResponse>): Promise<void> => {
   const context = getContext();
   const postId = context.postId;
 
@@ -73,11 +58,7 @@ router.post<
   });
 });
 
-router.post<
-  { postId: string },
-  DecrementResponse | { status: string; message: string },
-  unknown
->("/api/decrement", async (_req, res): Promise<void> => {
+router.post("/api/decrement", async (_req, res: Response<DecrementResponse>): Promise<void> => {
   const context = getContext();
   const postId = context.postId;
   if (!postId) {
@@ -95,12 +76,12 @@ router.post<
   });
 });
 
-// Use router middleware
+const app = express();
 app.use(router);
 
 const server = createServer(app);
 server.on("error", (err) => console.error(`server error; ${err.stack}`));
-server.startDevvitServer(() => {
+server.listen(getServerPort(), () => {
   const addr = server.address();
   if (addr === null) {
     console.log("Server address is null, but I'm listening!");
