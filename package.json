@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "devvit-hello-world-experimental",
+  "name": "ss-webbit-testing",
   "version": "0.0.0",
   "license": "BSD-3-Clause",
   "type": "module",
@@ -9,16 +9,17 @@
     "deploy": "npm run build:client && devvit upload",
     "dev": "concurrently -p \"[{name}]\" -n \"VITE,DEVVIT,GAME\" -c \"blue,green,magenta\" \"npm run dev:vite\" \"npm run dev:devvit\" \"npm run dev:client\" --restart-tries 2",
     "dev:client": "cd src/client && vite build --watch",
-    "dev:devvit": "devvit playtest YOUR_SUBREDDIT_NAME",
+    "dev:devvit": "MY_PORTAL=0 mydevvit playtest SnooSnekTest",
     "dev:vite": "cd src/client && vite --port 7474",
     "login": "devvit login",
     "type-check": "tsc --build"
   },
   "dependencies": {
-    "@devvit/client": "next",
-    "@devvit/public-api": "next",
-    "@devvit/server": "next",
-    "devvit": "next",
+    "@devvit/client": "../../snoodev-and-friends/devvit/packages/client",
+    "@devvit/public-api": "../../snoodev-and-friends/devvit/packages/public-api",
+    "@devvit/server": "../../snoodev-and-friends/devvit/packages/server",
+    "@devvit/redis": "../../snoodev-and-friends/devvit/packages/redis",
+    "devvit": "../../snoodev-and-friends/devvit/packages/devvit",
     "express": "5.1.0"
   },
   "devDependencies": {
