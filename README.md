@@ -12,12 +12,6 @@ If you're looking for a more batteries included starter, please check out:
 
 > Make sure you have Node 22 downloaded on your machine before running!
 
-```sh
-npm install -g devvit
-
-devvit login
-```
-
 1. **Create your project from the template**
    <br /><img src="https://github.com/user-attachments/assets/a234a6d6-42ff-4188-b5b9-79d7573c9300" width="400" />
 2. **Set up your new repo**
