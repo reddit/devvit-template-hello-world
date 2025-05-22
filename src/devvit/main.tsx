@@ -6,7 +6,6 @@ import { defineConfig } from "@devvit/server";
 
 defineConfig({
   name: "Hello World",
-  description: "Hello World",
   entry: "index.html",
   height: "tall",
   menu: {
