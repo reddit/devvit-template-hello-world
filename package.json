@@ -19,6 +19,7 @@
     "@devvit/public-api": "../../snoodev-and-friends/devvit/packages/public-api",
     "@devvit/server": "../../snoodev-and-friends/devvit/packages/server",
     "@devvit/redis": "../../snoodev-and-friends/devvit/packages/redis",
+    "@devvit/reddit": "../../snoodev-and-friends/devvit/packages/reddit",
     "devvit": "../../snoodev-and-friends/devvit/packages/devvit",
     "express": "5.1.0"
   },

@@ -8,6 +8,7 @@ import {
   IncrementResponse,
   DecrementResponse,
 } from "../shared/types/api";
+import {getReddit} from "../../../../snoodev-and-friends/devvit/packages/reddit";
 
 const router = express.Router();
 
@@ -24,6 +25,9 @@ router.get("/api/init", async (_req, res: Response<InitResponse>): Promise<void>
     });
     return;
   }
+
+  const user = await getReddit().getCurrentUser();
+  console.log('API Init for user: ', user?.username);
 
   try {
     const count = await redis.get("count");
@@ -56,7 +60,7 @@ router.post("/api/increment", async (_req, res: Response<IncrementResponse>): Pr
   }
 
   res.json({
-    count: await redis.incrBy("count", 1),
+    count: await redis.incrby("count", 1),
     postId,
     type: "increment",
   });
@@ -75,7 +79,7 @@ router.post("/api/decrement", async (_req, res: Response<DecrementResponse>): Pr
   }
 
   res.json({
-    count: await redis.incrBy("count", -1),
+    count: await redis.incrby("count", -1),
     postId,
     type: "decrement",
   });
