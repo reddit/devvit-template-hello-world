@@ -1,89 +1,98 @@
 import express from "express";
-import type {Response} from "express";
-import {getRedis} from "@devvit/redis";
-import {createServer, getContext, getServerPort} from "@devvit/server";
+import type { Response } from "express";
+import { getReddit } from "@devvit/reddit";
+import { getRedis } from "@devvit/redis";
+import { createServer, getContext, getServerPort } from "@devvit/server";
 
 import {
   InitResponse,
   IncrementResponse,
   DecrementResponse,
 } from "../shared/types/api";
-import {getReddit} from "../../../../snoodev-and-friends/devvit/packages/reddit";
 
 const router = express.Router();
 
-router.get("/api/init", async (_req, res: Response<InitResponse>): Promise<void> => {
-  const context = getContext();
-  const redis = getRedis();
-  const postId = context.postId;
+router.get(
+  "/api/init",
+  async (_req, res: Response<InitResponse>): Promise<void> => {
+    const context = getContext();
+    const redis = getRedis();
+    const postId = context.postId;
 
-  if (!postId) {
-    console.error("API Init Error: postId not found in devvit context");
-    res.status(400).json({
-      status: "error",
-      message: "postId is required but missing from context",
-    });
-    return;
-  }
-
-  const user = await getReddit().getCurrentUser();
-  console.log('API Init for user: ', user?.username);
-
-  try {
-    const count = await redis.get("count");
-    res.json({
-      type: "init",
-      postId: postId,
-      count: count ? parseInt(count) : 0,
-    });
-  } catch (error) {
-    console.error(`API Init Error for post ${postId}:`, error);
-    let errorMessage = "Unknown error during initialization";
-    if (error instanceof Error) {
-      errorMessage = `Initialization failed: ${error.message}`;
+    if (!postId) {
+      console.error("API Init Error: postId not found in devvit context");
+      res.status(400).json({
+        status: "error",
+        message: "postId is required but missing from context",
+      });
+      return;
     }
-    res.status(400).json({ status: "error", message: errorMessage });
+
+    const user = await getReddit().getCurrentUser();
+    console.log("API Init for user: ", user?.username);
+
+    try {
+      const count = await redis.get("count");
+      res.json({
+        type: "init",
+        postId: postId,
+        count: count ? parseInt(count) : 0,
+      });
+    } catch (error) {
+      console.error(`API Init Error for post ${postId}:`, error);
+      let errorMessage = "Unknown error during initialization";
+      if (error instanceof Error) {
+        errorMessage = `Initialization failed: ${error.message}`;
+      }
+      res.status(400).json({ status: "error", message: errorMessage });
+    }
   }
-});
+);
 
-router.post("/api/increment", async (_req, res: Response<IncrementResponse>): Promise<void> => {
-  const context = getContext();
-  const redis = getRedis();
-  const postId = context.postId;
+router.post(
+  "/api/increment",
+  async (_req, res: Response<IncrementResponse>): Promise<void> => {
+    const context = getContext();
+    const redis = getRedis();
+    const postId = context.postId;
 
-  if (!postId) {
-    res.status(400).json({
-      status: "error",
-      message: "postId is required",
+    if (!postId) {
+      res.status(400).json({
+        status: "error",
+        message: "postId is required",
+      });
+      return;
+    }
+
+    res.json({
+      count: await redis.incrby("count", 1),
+      postId,
+      type: "increment",
     });
-    return;
   }
+);
 
-  res.json({
-    count: await redis.incrby("count", 1),
-    postId,
-    type: "increment",
-  });
-});
+router.post(
+  "/api/decrement",
+  async (_req, res: Response<DecrementResponse>): Promise<void> => {
+    const context = getContext();
+    const redis = getRedis();
+    const postId = context.postId;
+    if (!postId) {
+      res.status(400).json({
+        status: "error",
+        message: "postId is required",
+      });
+      return;
+    }
 
-router.post("/api/decrement", async (_req, res: Response<DecrementResponse>): Promise<void> => {
-  const context = getContext();
-  const redis = getRedis();
-  const postId = context.postId;
-  if (!postId) {
-    res.status(400).json({
-      status: "error",
-      message: "postId is required",
+    res.json({
+      count: await redis.incrby("count", -1),
+      postId,
+      type: "decrement",
     });
-    return;
   }
-
-  res.json({
-    count: await redis.incrby("count", -1),
-    postId,
-    type: "decrement",
-  });
-});
+);
 
 const app = express();
 app.use(router);
@@ -104,5 +113,5 @@ server.listen(getServerPort(), () => {
     console.log(`Server is listening on ${addr.address}:${addr.port}`);
     return;
   }
-  console.error('...the hell is it doing?');
+  console.error("...the hell is it doing?");
 });

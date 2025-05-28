@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build:client": "cd src/client && vite build",
+    "build:server": "./build-server.sh",
     "deploy": "npm run build:client && devvit upload",
     "dev": "concurrently -p \"[{name}]\" -n \"VITE,DEVVIT,GAME\" -c \"blue,green,magenta\" \"npm run dev:vite\" \"npm run dev:devvit\" \"npm run dev:client\" --restart-tries 2",
     "dev:client": "cd src/client && vite build --watch",
@@ -15,17 +16,19 @@
     "type-check": "tsc --build"
   },
   "dependencies": {
-    "@devvit/client": "../../snoodev-and-friends/devvit/packages/client",
-    "@devvit/public-api": "../../snoodev-and-friends/devvit/packages/public-api",
-    "@devvit/server": "../../snoodev-and-friends/devvit/packages/server",
-    "@devvit/redis": "../../snoodev-and-friends/devvit/packages/redis",
-    "@devvit/reddit": "../../snoodev-and-friends/devvit/packages/reddit",
-    "devvit": "../../snoodev-and-friends/devvit/packages/devvit",
+    "@devvit/client": "../../devvit/packages/client",
+    "@devvit/public-api": "../../devvit/packages/public-api",
+    "@devvit/server": "../../devvit/packages/server",
+    "@devvit/redis": "../../devvit/packages/redis",
+    "@devvit/reddit": "../../devvit/packages/reddit",
+    "devvit": "../../devvit/packages/devvit",
     "express": "5.1.0"
   },
   "devDependencies": {
     "@types/express": "5.0.1",
     "concurrently": "9.1.2",
+    "esbuild": "0.23.0",
+    "esbuild-node-externals": "1.15.0",
     "typescript": "5.8.2",
     "vite": "6.2.4"
   }

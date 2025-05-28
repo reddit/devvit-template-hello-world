@@ -1,0 +1,98 @@
+{
+  "actor": {
+    "name": "main",
+    "owner": "snoo",
+    "version": "0.0.0"
+  },
+  "code": "",
+  "sourceMap": "",
+  "hostname": "main.local",
+  "provides": [
+    {
+      "fullName": "devvit.actor.hello.Hello",
+      "methods": [
+        {
+          "fullName": "/devvit.actor.hello.Hello/Ping",
+          "name": "Ping",
+          "requestType": "devvit.actor.hello.PingMessage",
+          "responseType": "devvit.actor.hello.PingMessage"
+        }
+      ],
+      "name": "Hello"
+    }
+  ],
+  "uses": [
+    {
+      "actor": {
+        "name": "default",
+        "owner": "devvit",
+        "version": "1.0.0"
+      },
+      "hostname": "wrappertypes.plugins.local",
+      "provides": [
+        {
+          "fullName": "devvit.actor.test.WrapperTypes",
+          "methods": [
+            {
+              "fullName": "/devvit.actor.test.WrapperTypes/StringRequest",
+              "name": "StringRequest",
+              "requestType": "google.protobuf.StringValue",
+              "responseType": "google.protobuf.StringValue"
+            },
+            {
+              "fullName": "/devvit.actor.test.WrapperTypes/BoolRequest",
+              "name": "BoolRequest",
+              "requestType": "google.protobuf.BoolValue",
+              "responseType": "google.protobuf.BoolValue"
+            },
+            {
+              "fullName": "/devvit.actor.test.WrapperTypes/Int32Request",
+              "name": "Int32Request",
+              "requestType": "google.protobuf.Int32Value",
+              "responseType": "google.protobuf.Int32Value"
+            },
+            {
+              "fullName": "/devvit.actor.test.WrapperTypes/UInt32Request",
+              "name": "UInt32Request",
+              "requestType": "google.protobuf.UInt32Value",
+              "responseType": "google.protobuf.UInt32Value"
+            },
+            {
+              "fullName": "/devvit.actor.test.WrapperTypes/Int64Request",
+              "name": "Int64Request",
+              "requestType": "google.protobuf.Int64Value",
+              "responseType": "google.protobuf.Int64Value"
+            },
+            {
+              "fullName": "/devvit.actor.test.WrapperTypes/UInt64Request",
+              "name": "UInt64Request",
+              "requestType": "google.protobuf.UInt64Value",
+              "responseType": "google.protobuf.UInt64Value"
+            },
+            {
+              "fullName": "/devvit.actor.test.WrapperTypes/FloatRequest",
+              "name": "FloatRequest",
+              "requestType": "google.protobuf.FloatValue",
+              "responseType": "google.protobuf.FloatValue"
+            },
+            {
+              "fullName": "/devvit.actor.test.WrapperTypes/DoubleRequest",
+              "name": "DoubleRequest",
+              "requestType": "google.protobuf.DoubleValue",
+              "responseType": "google.protobuf.DoubleValue"
+            }
+          ],
+          "name": "WrapperTypes"
+        }
+      ]
+    }
+  ],
+  "buildInfo": {
+    "created": "2025-03-17T17:25:08.874Z",
+    "dependencies": {
+      "node": "22.6.0",
+      "@devvit/protos": "0.11.11-dev",
+      "@devvit/public-api": "0.11.11-dev"
+    }
+  }
+}
