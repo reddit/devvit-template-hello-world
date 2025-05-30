@@ -6,6 +6,7 @@
   },
   "code": "",
   "sourceMap": "",
+  "devvitJson": { "name": "abc", "server": {} },
   "hostname": "main.local",
   "provides": [
     {

@@ -16,5 +16,5 @@ jq --rawfile code "$OUTPUT_FILE" \
    '.code = $code | .sourceMap = $sourcemap' \
    bundle.server.template.json > bin/bundle.server.json
 
-echo "Bundle created at bundle.json"
+echo "Bundle created at bin/bundle.server.json"
 

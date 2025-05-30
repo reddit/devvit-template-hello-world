@@ -1,8 +1,13 @@
 import express from "express";
-import type { Response } from "express";
+import type { Request, Response } from "express";
 import { getReddit } from "@devvit/reddit";
 import { getRedis } from "@devvit/redis";
-import { createServer, getContext, getServerPort } from "@devvit/server";
+import {
+  createServer,
+  getContext,
+  getServerPort,
+  webbitEnable,
+} from "@devvit/server";
 
 import {
   InitResponse,
@@ -91,6 +96,30 @@ router.post(
       postId,
       type: "decrement",
     });
+  }
+);
+
+router.get(
+  "/api/hello",
+  async (
+    req: Request,
+    res: Response<
+      { message: string; status: string } | { postId: string; message: string }
+    >
+  ): Promise<void> => {
+    const context = getContext();
+    const postId = context.postId;
+    if (!postId) {
+      res.status(400).json({
+        status: "error",
+        message: "postId is required",
+      });
+      return;
+    }
+
+    const message =
+      typeof req.query["message"] === "string" ? req.query["message"] : "";
+    res.json({ message, postId });
   }
 );
 
