@@ -2,7 +2,11 @@
 
 set -euo pipefail
 
-OUTPUT_FILE=bin/index.cjs
+SERVER_JS_OUTPUT=bin/index.cjs
+OUTPUT_BUNDLE=dist/main.bundle.json
+
+# This should spit out a bundle using the classic bundler approach
+npx devvit bundle actor main
 
 # Build the server bundle using esbuild
 ./esbuild.mjs
@@ -11,10 +15,10 @@ OUTPUT_FILE=bin/index.cjs
 TEMP_DIR=$(mktemp -d)
 trap 'rm -rf "$TEMP_DIR"' EXIT
 
-jq --rawfile code "$OUTPUT_FILE" \
-   --rawfile sourcemap "${OUTPUT_FILE}.map" \
-   '.code = $code | .sourceMap = $sourcemap' \
-   bundle.server.template.json > bin/bundle.server.json
+jq --rawfile code "$SERVER_JS_OUTPUT" \
+   --rawfile sourcemap "${SERVER_JS_OUTPUT}.map" \
+   '.standaloneServerCode = $code | .standaloneServerSourceMap = $sourcemap | .actor.name = "main" | .actor.version = "0.0.0"' \
+   ${OUTPUT_BUNDLE} > bin/bundle.combined.json
 
-echo "Bundle created at bin/bundle.server.json"
+echo "Bundle created at bin/bundle.combined.json"
 

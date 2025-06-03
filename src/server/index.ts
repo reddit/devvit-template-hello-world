@@ -123,6 +123,20 @@ router.get(
   }
 );
 
+router.get(
+  "/api/error",
+  async (
+    _req: Request,
+    _res: Response<
+      { message: string; status: string } | { postId: string; message: string }
+    >
+  ): Promise<void> => {
+    const context = getContext();
+    const postId = context.postId;
+    throw new Error("This is a test error from the API: " + postId);
+  }
+);
+
 const app = express();
 app.use(router);
 
