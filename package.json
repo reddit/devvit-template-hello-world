@@ -6,19 +6,20 @@
   "type": "module",
   "scripts": {
     "build:client": "cd src/client && vite build",
-    "deploy": "npm run build:client && devvit upload --copy-paste",
+    "deploy": "npm run build:client && devvit upload",
     "dev": "concurrently -p \"[{name}]\" -n \"VITE,DEVVIT,GAME\" -c \"blue,green,magenta\" \"npm run dev:vite\" \"npm run dev:devvit\" \"npm run dev:client\" --restart-tries 2",
     "dev:client": "cd src/client && vite build --watch",
     "dev:devvit": "devvit playtest YOUR_SUBREDDIT_NAME",
     "dev:vite": "cd src/client && vite --port 7474",
-    "login": "devvit login --copy-paste",
+    "login": "devvit login",
     "type-check": "tsc --build"
   },
   "dependencies": {
-    "@devvit/client": "0.11.16-next-2025-05-19-1403da2a7.0",
-    "@devvit/public-api": "0.11.16-next-2025-05-19-1403da2a7.0",
-    "@devvit/server": "0.11.16-next-2025-05-19-1403da2a7.0",
-    "devvit": "0.11.16-next-2025-05-19-1403da2a7.0",
+    "@devvit/client": "0.11.16",
+    "@devvit/public-api": "0.11.16",
+    "@devvit/server": "0.11.16",
+    "@devvit/redis": "0.11.16",
+    "devvit": "latest",
     "express": "5.1.0"
   },
   "devDependencies": {
