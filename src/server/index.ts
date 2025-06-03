@@ -1,11 +1,11 @@
 import express from "express";
-import { createServer } from "node:http";
-import { devvitMiddleware } from "./middleware";
 import {
   InitResponse,
   IncrementResponse,
   DecrementResponse,
 } from "../shared/types/api";
+import {getContext, getServerPort, createServer} from "@devvit/server";
+import {getRedis} from "@devvit/redis";
 
 const app = express();
 
@@ -16,16 +16,14 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware for plain text body parsing
 app.use(express.text());
 
-// Apply Devvit middleware
-app.use(devvitMiddleware);
-
 const router = express.Router();
 
 router.get<
   { postId: string },
   InitResponse | { status: string; message: string }
->("/api/init", async (req, res): Promise<void> => {
-  const { postId } = req.devvit;
+>("/api/init", async (_req, res): Promise<void> => {
+  const { postId } = getContext();
+  const redis = getRedis();
 
   if (!postId) {
     console.error("API Init Error: postId not found in devvit context");
@@ -37,7 +35,7 @@ router.get<
   }
 
   try {
-    const count = await req.devvit.redis.get("count");
+    const count = await redis.get("count");
     res.json({
       type: "init",
       postId: postId,
@@ -57,8 +55,8 @@ router.post<
   { postId: string },
   IncrementResponse | { status: string; message: string },
   unknown
->("/api/increment", async (req, res): Promise<void> => {
-  const { postId } = req.devvit;
+>("/api/increment", async (_req, res): Promise<void> => {
+  const { postId } = getContext();
   if (!postId) {
     res.status(400).json({
       status: "error",
@@ -67,8 +65,9 @@ router.post<
     return;
   }
 
+  const redis = getRedis();
   res.json({
-    count: await req.devvit.redis.incrBy("count", 1),
+    count: await redis.incrby("count", 1),
     postId,
     type: "increment",
   });
@@ -78,8 +77,8 @@ router.post<
   { postId: string },
   DecrementResponse | { status: string; message: string },
   unknown
->("/api/decrement", async (req, res): Promise<void> => {
-  const { postId } = req.devvit;
+>("/api/decrement", async (_req, res): Promise<void> => {
+  const { postId } = getContext();
   if (!postId) {
     res.status(400).json({
       status: "error",
@@ -88,8 +87,9 @@ router.post<
     return;
   }
 
+  const redis = getRedis();
   res.json({
-    count: await req.devvit.redis.incrBy("count", -1),
+    count: await redis.incrby("count", -1),
     postId,
     type: "decrement",
   });
@@ -98,9 +98,7 @@ router.post<
 // Use router middleware
 app.use(router);
 
-// Get port from environment variable with fallback
-const port = process.env.WEBBIT_PORT || 3000;
-
+const port = getServerPort();
 const server = createServer(app);
 server.on("error", (err) => console.error(`server error; ${err.stack}`));
 server.listen(port, () => console.log(`http://localhost:${port}`));
