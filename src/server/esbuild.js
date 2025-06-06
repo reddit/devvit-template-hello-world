@@ -2,9 +2,11 @@
 
 import * as esbuild from "esbuild";
 import { clean } from "esbuild-plugin-clean";
-import { BuildOptions } from "esbuild";
 
-const options: BuildOptions = {
+/**
+ * @type {import("esbuild").BuildOptions}
+ */
+const options = {
   entryPoints: ["index.ts"],
   bundle: true,
   splitting: false,
