@@ -5,14 +5,6 @@
     "client": {
       "dir": "src/client/dist",
       "entry": "src/client/dist/index.html"
-    },
-    "create": {
-      "height": "tall",
-      "menu": {
-        "enable": true,
-        "label": "Hello World",
-        "scope": "moderator"
-      }
     }
   },
   "server": {
