@@ -3,11 +3,11 @@
   "name": "YOUR_APP_NAME",
   "post": {
     "client": {
-      "dir": "src/client/dist",
-      "entry": "src/client/dist/index.html"
+      "dir": "dist/client",
+      "entry": "dist/client/index.html"
     }
   },
   "server": {
-    "entry": "src/server/dist/index.js"
+    "entry": "dist/server/index.cjs"
   }
 }
