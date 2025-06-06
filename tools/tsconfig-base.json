@@ -37,7 +37,7 @@
 
     "sourceMap": true,
 
-    "target": "ES2023"
+    "target": "ES2022"
   },
   // https://github.com/microsoft/TypeScript/wiki/Performance#misconfigured-include-and-exclude
   "exclude": ["dist", "node_modules", ".*/"]

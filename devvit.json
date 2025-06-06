@@ -1,0 +1,21 @@
+{
+  "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
+  "name": "foo000-532",
+  "post": {
+    "client": {
+      "dir": "src/client/dist",
+      "entry": "src/client/dist/index.html"
+    },
+    "create": {
+      "height": "tall",
+      "menu": {
+        "enable": true,
+        "label": "Hello World",
+        "scope": "moderator"
+      }
+    }
+  },
+  "server": {
+    "entry": "src/server/dist/index.js"
+  }
+}
