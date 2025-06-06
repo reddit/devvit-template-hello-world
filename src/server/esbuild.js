@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import esbuild from "esbuild";
+import * as esbuild from "esbuild";
 import { clean } from "esbuild-plugin-clean";
+import { BuildOptions } from "esbuild";
 
-// Shared options -------------------------------------------------------------
-const options = {
+const options: BuildOptions = {
   entryPoints: ["index.ts"],
   bundle: true,
   splitting: false,
@@ -12,21 +12,18 @@ const options = {
   outdir: "dist",
   platform: "node",
   target: "node22",
-  format: "esm",
+  format: "cjs",
   sourcemap: true,
   plugins: [
-    // Removes everything to make sure no weird artifacts or out
-    // of date fixtures are hanging around
+    // Removes everything to make sure no weird artifacts are hanging around
     clean({
       patterns: ["./dist/**/*"],
     }),
   ],
 };
 
-// Detect "watch" (or "w") --------------------------------------------------
 const isWatch = process.argv.includes("--watch") || process.argv.includes("-w");
 
-// Helper plugin to print rebuild status -------------------------------------
 const loggerPlugin = {
   name: "rebuild-logger",
   setup(build) {
@@ -48,7 +45,6 @@ const loggerPlugin = {
 (async () => {
   try {
     if (isWatch) {
-      // In watch mode we need to use the Context API (watch has been removed from build())
       const ctx = await esbuild.context({
         ...options,
         plugins: [...options.plugins, loggerPlugin],
