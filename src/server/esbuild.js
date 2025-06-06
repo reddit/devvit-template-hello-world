@@ -11,7 +11,7 @@ const options = {
   treeShaking: true,
   outdir: "dist",
   platform: "node",
-  target: "node20",
+  target: "node22",
   format: "esm",
   sourcemap: true,
   plugins: [
