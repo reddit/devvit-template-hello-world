@@ -7,7 +7,7 @@ import { clean } from "esbuild-plugin-clean";
 const options = {
   entryPoints: ["index.ts"],
   bundle: true,
-  splitting: true,
+  splitting: false,
   treeShaking: true,
   outdir: "dist",
   platform: "node",
