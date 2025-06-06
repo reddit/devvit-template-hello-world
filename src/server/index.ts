@@ -65,7 +65,7 @@ router.post<
   }
 
   res.json({
-    count: await getRedis().incrby("count", 1),
+    count: await getRedis().incrBy("count", 1),
     postId,
     type: "increment",
   });
@@ -86,7 +86,7 @@ router.post<
   }
 
   res.json({
-    count: await getRedis().incrby("count", -1),
+    count: await getRedis().incrBy("count", -1),
     postId,
     type: "decrement",
   });
