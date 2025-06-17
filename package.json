@@ -16,11 +16,11 @@
     "type-check": "tsc --build"
   },
   "dependencies": {
-    "@devvit/client": "0.11.17-next-2025-06-12-824bd74c5.0",
-    "@devvit/public-api": "0.11.17-next-2025-06-12-824bd74c5.0",
-    "@devvit/server": "0.11.17-next-2025-06-12-824bd74c5.0",
-    "@devvit/redis": "0.11.17-next-2025-06-12-824bd74c5.0",
-    "devvit": "0.11.17-next-2025-06-12-824bd74c5.0",
+    "@devvit/client": "0.11.17",
+    "@devvit/public-api": "0.11.17",
+    "@devvit/server": "0.11.17",
+    "@devvit/redis": "0.11.17",
+    "devvit": "latest",
     "express": "5.1.0"
   },
   "devDependencies": {
