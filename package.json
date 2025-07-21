@@ -20,7 +20,7 @@
     "@devvit/public-api": "0.11.18",
     "@devvit/redis": "0.11.18",
     "@devvit/server": "0.11.18",
-    "devvit": "latest",
+    "devvit": "next",
     "express": "5.1.0"
   },
   "devDependencies": {
