@@ -3,6 +3,7 @@ import {
   DecrementResponse,
   InitResponse,
 } from "../shared/types/api";
+import { navigateTo } from "@devvit/client";
 
 const counterValueElement = document.getElementById(
   "counter-value"
@@ -13,6 +14,24 @@ const incrementButton = document.getElementById(
 const decrementButton = document.getElementById(
   "decrement-button"
 ) as HTMLButtonElement;
+
+const docsLink = document.getElementById("docs-link") as HTMLDivElement;
+const playtestLink = document.getElementById("playtest-link") as HTMLDivElement;
+const discordLink = document.getElementById("discord-link") as HTMLDivElement;
+
+docsLink.addEventListener("click", () => {
+  navigateTo("https://developers.reddit.com/docs");
+});
+
+playtestLink.addEventListener("click", () => {
+  navigateTo("https://www.reddit.com/r/Devvit");
+});
+
+discordLink.addEventListener("click", () => {
+  navigateTo("https://discord.com/invite/R7yu2wh9Qz");
+});
+
+const titleElement = document.getElementById("title") as HTMLHeadingElement;
 
 let currentPostId: string | null = null;
 
@@ -26,6 +45,7 @@ async function fetchInitialCount() {
     if (data.type === "init") {
       counterValueElement.textContent = data.count.toString();
       currentPostId = data.postId; // Store postId for later use
+      titleElement.textContent = `Hey ${data.username} 👋`;
     } else {
       console.error("Invalid response type from /api/init", data);
       counterValueElement.textContent = "Error";

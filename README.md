@@ -20,11 +20,8 @@ If you're looking for a more batteries included starter, please check out:
    <br /><img src="https://github.com/user-attachments/assets/a09cf721-4605-4c7e-beae-1e7bd665c4fa" width="400" />
 4. `cd your-app-name`
 5. `npm install`
-6. **Make a subreddit**: Make a private subreddit on Reddit.com. This will be where you do your own development. Go to Reddit.com, scroll the left side bar down to communities, and click "Create a community."
-7. **Update the name in package.json**: Find the `dev:devvit` command and replace `YOUR_SUBREDDIT_NAME` with the subreddit name you just created.
-8. **Update json file**: In `devvit.json` replace `YOUR_APP_NAME` with the name of your app. This will be shown to users that play your app.
-9. **Upload**: Run `npm run deploy` and go through the prompts
-10. **Playtest**: Run `npm run dev` to playtest your application in production by going to your subreddit. Use the subreddit menu action called "New Hello World Post" to create the post.
+6. `npm run dev`: This will guide you through a setup wizard and automatically start a development server when you are done
+7. Go to the URL in the console to see your post live on reddit.com
 
 ## Commands
 

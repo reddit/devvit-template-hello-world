@@ -6,6 +6,7 @@ import {
 } from "../shared/types/api";
 import { createServer, context, getServerPort } from "@devvit/server";
 import { redis } from "@devvit/redis";
+import { reddit } from "@devvit/reddit";
 
 const app = express();
 
@@ -34,11 +35,16 @@ router.get<
   }
 
   try {
-    const count = await redis.get("count");
+    const [count, username] = await Promise.all([
+      redis.get("count"),
+      reddit.getCurrentUsername(),
+    ]);
+
     res.json({
       type: "init",
       postId: postId,
       count: count ? parseInt(count) : 0,
+      username: username ?? "anonymous",
     });
   } catch (error) {
     console.error(`API Init Error for post ${postId}:`, error);
