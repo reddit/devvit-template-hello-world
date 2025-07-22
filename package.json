@@ -10,7 +10,7 @@
     "deploy": "npm run build:client && npm run build:server && devvit upload",
     "dev": "concurrently -p \"[{name}]\" -n \"CLIENT,SERVER,DEVVIT\" -c \"blue,green,magenta\" \"npm run dev:client\" \"npm run dev:server\" \"npm run dev:devvit\" --restart-tries 2",
     "dev:client": "cd src/client && vite build --watch",
-    "dev:devvit": "devvit playtest YOUR_SUBREDDIT_NAME",
+    "dev:devvit": "devvit playtest",
     "dev:server": "cd src/server && vite build --watch",
     "login": "devvit login",
     "type-check": "tsc --build"
@@ -18,6 +18,7 @@
   "dependencies": {
     "@devvit/client": "0.11.18",
     "@devvit/public-api": "0.11.18",
+    "@devvit/reddit": "^0.11.18",
     "@devvit/redis": "0.11.18",
     "@devvit/server": "0.11.18",
     "devvit": "latest",

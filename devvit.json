@@ -9,5 +9,8 @@
   },
   "server": {
     "entry": "dist/server/index.cjs"
+  },
+  "triggers": {
+    "onAppInstall": "/internal/post-create"
   }
 }

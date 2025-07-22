@@ -6,6 +6,8 @@ import {
 } from "../shared/types/api";
 import { createServer, context, getServerPort } from "@devvit/server";
 import { redis } from "@devvit/redis";
+import { reddit } from "@devvit/reddit";
+import { Devvit } from "@devvit/public-api";
 
 const app = express();
 
@@ -89,6 +91,41 @@ router.post<
     count: await redis.incrBy("count", -1),
     postId,
     type: "decrement",
+  });
+});
+
+
+router.post("/internal/post-create", async (_req, res): Promise<void> => {
+  const { subredditName } = context;
+  if (!subredditName) {
+    res.status(400).json({
+      status: "error",
+      message: "subredditName is required",
+    });
+    return;
+  }
+  reddit.submitPost({
+    runAs: 'USER',
+    userGeneratedContent: {
+      text: 'Hello there! This is a test post from the Test HW-1 app.',
+    },
+    subredditName: subredditName,
+    title: 'Test Post from Test HW-1',
+    preview: Devvit.createElement("blocks", {
+      height: "tall",
+      children: [
+        Devvit.createElement("vstack", {
+          height: "100%",
+          width: "100%",
+          backgroundColor: "#ffbf0b",
+        }),
+      ],
+    }),
+  });
+
+  res.json({
+    status: "success",
+    message: `Post created in subreddit ${subredditName}`,
   });
 });
 
