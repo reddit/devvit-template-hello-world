@@ -8,6 +8,7 @@ import { createServer, context, getServerPort } from "@devvit/server";
 import { redis } from "@devvit/redis";
 import { reddit } from "@devvit/reddit";
 import { Devvit } from "@devvit/public-api";
+import { settings } from "@devvit/settings";
 
 const app = express();
 

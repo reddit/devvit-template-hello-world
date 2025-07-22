@@ -21,6 +21,7 @@
     "@devvit/reddit": "^0.11.18",
     "@devvit/redis": "0.11.18",
     "@devvit/server": "0.11.18",
+    "@devvit/settings": "^0.11.18",
     "devvit": "latest",
     "express": "5.1.0"
   },
