@@ -1,6 +1,6 @@
 {
   "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
-  "name": "test-hw-1",
+  "name": "YOUR_APP_NAME",
   "post": {
     "client": {
       "dir": "dist/client",
