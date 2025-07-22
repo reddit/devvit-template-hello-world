@@ -1,6 +1,6 @@
 {
   "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
-  "name": "{{name}}",
+  "name": "<% name %>",
   "post": {
     "client": {
       "dir": "dist/client",
