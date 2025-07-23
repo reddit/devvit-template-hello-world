@@ -7,6 +7,7 @@ import {
 import { createServer, context, getServerPort } from "@devvit/server";
 import { redis } from "@devvit/redis";
 import { reddit } from "@devvit/reddit";
+import { createPost } from "./core/post";
 
 const app = express();
 
@@ -98,12 +99,41 @@ router.post<
   });
 });
 
-// Use router middleware
-app.use(router);
+router.post("/internal/on-app-install", async (_req, res): Promise<void> => {
+  try {
+    const post = await createPost();
 
-// Get port from environment variable with fallback
-const port = getServerPort();
+    res.json({
+      status: "success",
+      message: `Post created in subreddit ${context.subredditName} with id ${post.id}`,
+    });
+  } catch (error) {
+    console.error(`Error creating post: ${error}`);
+    res.status(400).json({
+      status: "error",
+      message: "Failed to create post",
+    });
+  }
+});
+
+router.post("/internal/menu/post-create", async (_req, res): Promise<void> => {
+  try {
+    const post = await createPost();
+
+    res.json({
+      navigateTo: `https://reddit.com/r/${context.subredditName}/comments/${post.id}`,
+    });
+  } catch (error) {
+    console.error(`Error creating post: ${error}`);
+    res.status(400).json({
+      status: "error",
+      message: "Failed to create post",
+    });
+  }
+});
+
+app.use(router);
 
 const server = createServer(app);
 server.on("error", (err) => console.error(`server error; ${err.stack}`));
-server.listen(port);
+server.listen(getServerPort());
