@@ -106,4 +106,4 @@ const port = getServerPort();
 
 const server = createServer(app);
 server.on("error", (err) => console.error(`server error; ${err.stack}`));
-server.listen(port, () => console.log(`http://localhost:${port}`));
+server.listen(port);
