@@ -9,9 +9,9 @@ export const createPost = async () => {
 
   return await reddit.submitPost({
     splash: {
-      appDisplayName: "hello",
+      appDisplayName: "<% name %>",
     },
     subredditName: subredditName,
-    title: "hello world",
+    title: "<% name %>",
   });
 };
