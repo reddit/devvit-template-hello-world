@@ -4,9 +4,13 @@ import {
   IncrementResponse,
   DecrementResponse,
 } from "../shared/types/api";
-import { createServer, context, getServerPort } from "@devvit/server";
-import { redis } from "@devvit/redis";
-import { reddit } from "@devvit/reddit";
+import {
+  createServer,
+  context,
+  getServerPort,
+  reddit,
+  redis,
+} from "@devvit/web/server";
 import { createPost } from "./core/post";
 
 const app = express();
