@@ -15,7 +15,7 @@
     "dev:devvit": "dotenv -e .env -- devvit playtest",
     "dev:server": "cd src/server && vite build --watch",
     "login": "devvit login",
-    "launch": "devvit publish",
+    "launch": "npm run build && devvit publish",
     "type-check": "tsc --build"
   },
   "dependencies": {
