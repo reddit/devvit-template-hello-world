@@ -9,7 +9,7 @@ export default defineConfig({
       output: {
         entryFileNames: "[name].js",
         chunkFileNames: "[name].js",
-        assetFileNames: "[name].[extname]",
+        assetFileNames: "[name][extname]",
         sourcemapFileNames: "[name].js.map",
       },
     },
