@@ -25,7 +25,7 @@ discordLink.addEventListener("click", () => {
 
 const titleElement = document.getElementById("title") as HTMLHeadingElement;
 
-async function init() {
+function init() {
   titleElement.textContent = `Hey ${context.username ?? "user"} 👋`;
 }
 
