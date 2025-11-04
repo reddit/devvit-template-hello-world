@@ -2,7 +2,7 @@ import {
   IncrementResponse,
   DecrementResponse,
   InitResponse,
-} from "../shared/types/api";
+} from "../../shared/types/api";
 import { navigateTo } from "@devvit/web/client";
 
 const counterValueElement = document.getElementById(
