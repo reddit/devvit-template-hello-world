@@ -5,6 +5,7 @@ export default defineConfig({
   plugins: [],
   build: {
     outDir: "../../dist/client",
+    emptyOutDir: true,
     rollupOptions: {
       input: {
         splash: "splash/splash.html",
